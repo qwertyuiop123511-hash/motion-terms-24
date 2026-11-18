@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>アプリの動きの名前24</title>
+<style>
+  body { font-family: sans-serif; margin: 0; background: #faf7f2; color: #222; }
+  header { padding: 20px 16px 8px; max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  p.sub { color: #666; margin: 0 0 12px; font-size: 14px; }
+  input { width: 100%; padding: 10px 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+  main { max-width: 960px; margin: 0 auto; padding: 8px 16px 32px; }
+  h2 { font-size: 16px; margin: 22px 0 8px; color: #b03030; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .card { background: #fff; border: 1px solid #e5ded2; border-radius: 10px; padding: 12px; }
+  .card .name { font-weight: bold; font-size: 15px; }
+  .card .en { color: #b03030; font-size: 12px; margin-left: 6px; }
+  .card .desc { color: #555; font-size: 13px; margin-top: 6px; line-height: 1.5; }
+  footer { max-width: 960px; margin: 0 auto; padding: 0 16px 24px; color: #999; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>アプリの動きの名前24</h1>
+  <p class="sub">AIにアプリを作らせる時、「いい感じに」ではなく名前で動きを指定するための用語集。</p>
+  <input id="q" type="search" placeholder="用語を検索（例：トースト、spinner）">
+</header>
+<main id="list"></main>
+<footer>出典：うちた @uchita_success のチートシート（X投稿）をもとに作成した個人用リファレンス</footer>
+<script>
+const DATA = [
+  ["基本の12", [
+    ["リップル","ripple effect","押した所から波紋が広がる。押せた合図に"],
+    ["トグル","toggle switch","つまみがすべる。オンとオフの切り替えに"],
+    ["ローディングボタン","loading button","押すと、くるくる→チェックに変わる"],
+    ["タイピングインジケーター","typing indicator","入力中の「…」。相手やAIが考えている合図"],
+    ["スピナー","spinner","くるくる回る輪。短い待ちに"],
+    ["プログレスバー","progress bar","進み具合が見える。長い待ちに"],
+    ["トースト","toast","下にふっと出て、数秒で消える知らせ"],
+    ["ボトムシート","bottom sheet","下から板がせり上がる。追加の選択に"],
+    ["ドロワー","navigation drawer","横からメニューがすべり出る"],
+    ["プルトゥリフレッシュ","pull to refresh","下に引いて離すと、新しい中身に更新"],
+    ["スワイプアクション","swipe actions","横にずらすと「削除」が出る"],
+    ["カルーセル","carousel","横に送る。下の点が今の位置"]
+  ]],
+  ["プロっぽい12", [
+    ["スプリング","spring animation","行きすぎて戻る、ばねの動き。出すときに"],
+    ["いいねのはじけ","like animation","ハートがはじける。小さなごほうびに"],
+    ["コンフェッティ","confetti","紙吹雪が舞う。完了を祝うときに"],
+    ["スケルトン","skeleton screen","中身の形を先に出す。待ちが短く感じる"],
+    ["フローティングラベル","floating label","入力欄の見出しが、上へ小さく逃げる"],
+    ["シェイク","shake animation","まちがえると横に震える。エラーの合図に"],
+    ["共有要素トランジション","shared element transition","写真がそのまま大きくなって、次の画面へ"],
+    ["スタッガー","stagger animation","少しずつずらして順に出す。一覧がそろう"],
+    ["丸く広がる切り替え","circular reveal","押した所から円が広がって、次の画面に"],
+    ["ドラッグで並べ替え","drag to reorder","長押しでつかんで、順番を入れ替える"],
+    ["長押しメニュー","context menu","長押しで浮き上がり、まわりがぼけてメニュー"],
+    ["ラバーバンド","rubber band effect","端まで行くと、ゴムのように伸びて戻る"]
+  ]]
+];
+const list = document.getElementById('list');
+function render(filter) {
+  list.innerHTML = '';
+  DATA.forEach(([group, items]) => {
+    const hit = items.filter(([n, e, d]) => !filter || (n + e + d).toLowerCase().includes(filter));
+    if (!hit.length) return;
+    const h = document.createElement('h2'); h.textContent = group; list.appendChild(h);
+    const g = document.createElement('div'); g.className = 'grid';
+    hit.forEach(([n, e, d]) => {
+      const c = document.createElement('div'); c.className = 'card';
+      c.innerHTML = '<span class="name"></span><span class="en"></span><div class="desc"></div>';
+      c.querySelector('.name').textContent = n;
+      c.querySelector('.en').textContent = e;
+      c.querySelector('.desc').textContent = d;
+      g.appendChild(c);
+    });
+    list.appendChild(g);
+  });
+}
+render('');
+document.getElementById('q').addEventListener('input', e => render(e.target.value.trim().toLowerCase()));
+</script>
+</body>
+</html>
